@@ -3,6 +3,7 @@ Store::Application.routes.draw do
     resources :products
     root to: 'products#index'
   end
-  match '*path', to: redirect("/#{I18n.default_locale}/%{path}")
+
+  match '*path', to: redirect("/#{I18n.default_locale}/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
   match '', to: redirect("/#{I18n.default_locale}")
 end
